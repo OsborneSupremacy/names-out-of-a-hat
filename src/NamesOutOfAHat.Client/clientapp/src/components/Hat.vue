@@ -2,11 +2,11 @@
     <div class="jumbotron">
         <h1 class="display-4">Put everyone's name in the hat!</h1>
     </div>
-    <span v-if="people.length === 0" >where are the people?</span>
 
-    <PersonDisplay v-for="person in people" :key="person.name" v-bind:person="person"/>
+    <PersonDisplay v-for="person in people" :key="person.name" :person="person"/>
+    <PersonAdd v-if="addingPerson" :person="personBeingAdded" :cancelFunction="cancelAdd" />
 
-    <p>
+    <p v-if="!addingPerson" >
       <button type="button" @click="addPerson" class="btn btn-primary">Add Person</button>
     </p>
 </template>
@@ -15,12 +15,16 @@
 import { Options, Vue } from 'vue-class-component'
 import Person from '@/components/Person.vue'
 import PersonDisplay from '@/views/PersonDisplay.vue'
+import PersonAdd from '@/views/PersonAdd.vue'
 
 @Options({
   components: {
-    PersonDisplay
+    PersonDisplay,
+    PersonAdd
   },
   data: () => ({
+    addingPerson: Boolean(false),
+    personBeingAdded: { name: '' } as Person,
     people: [
       { name: 'Bob' },
       { name: 'Sue' },
@@ -30,7 +34,11 @@ import PersonDisplay from '@/views/PersonDisplay.vue'
   }),
   methods: {
     addPerson () {
-      this.people.push({ name: 'Another Bob' } as Person)
+      this.personBeingAdded = { name: 'xczc' } as Person
+      this.addingPerson = true
+    },
+    cancelAdd: function () {
+      this.addingPerson = false
     }
   }
 })
