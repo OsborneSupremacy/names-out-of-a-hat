@@ -1,25 +1,33 @@
 <template>
-    <div class="jumbotron">
-        <h1 class="display-4">Put everyone's name in the hat!</h1>
+  <div class="bg-light rounded-3" >
+    <div class="container-fluid py-5" >
+      <div class="jumbotron">
+          <h1 class="display-4">Put everyone's name in the hat!</h1>
+      </div>
+
+      <PersonDisplay
+        v-for="person in people"
+        :key="person.id"
+        :person="person"
+        :removeFunction="removePerson"
+        />
+
+      <PersonAdd
+        v-if="addMode"
+        :person="personBeingAdded"
+        :commitFunction="commitAdd"
+        :cancelFunction="cancelAdd"
+        />
+
+      <p v-if="!addMode" >
+        <button type="button" @click="addPerson" class="btn btn-primary">Add Person</button>
+      </p>
     </div>
+  </div>
 
-    <PersonDisplay
-      v-for="person in people"
-      :key="person.id"
-      :person="person"
-      :removeFunction="removePerson"
-      />
-
-    <PersonAdd
-      v-if="addingPerson"
-      :person="personBeingAdded"
-      :commitFunction="commitAdd"
-      :cancelFunction="cancelAdd"
-      />
-
-    <p v-if="!addingPerson" >
-      <button type="button" @click="addPerson" class="btn btn-primary">Add Person</button>
-    </p>
+  <div class="container-fluid py-5" >
+    <button type="button" @click="validateHat" class="btn btn-primary btn-lg">Shake Up The Hat</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,8 +43,8 @@ import UUID from 'uuidjs'
     PersonAdd
   },
   data: () => ({
-    addingPerson: Boolean(false),
-    personBeingAdded: { id: UUID.generate(), name: '' } as Person,
+    addMode: Boolean(false),
+    personBeingAdded: { id: UUID.generate(), name: '', email: '' } as Person,
     people: [
       { id: UUID.generate(), name: 'Bob', email: 'bob@gmail.com' },
       { id: UUID.generate(), name: 'Sue', email: '' },
@@ -47,14 +55,14 @@ import UUID from 'uuidjs'
   methods: {
     addPerson () {
       this.personBeingAdded = { name: '', email: '' } as Person
-      this.addingPerson = true
+      this.addMode = true
     },
     commitAdd: function (person: Person) {
       this.people.push(person)
-      this.addingPerson = false
+      this.addMode = false
     },
     cancelAdd: function () {
-      this.addingPerson = false
+      this.addMode = false
     },
     removePerson: function (person: Person) {
       const p2 : Person[] = this.people
@@ -64,6 +72,23 @@ import UUID from 'uuidjs'
         return
       }
       p2.splice(p2.indexOf(foundPerson!), 1)
+    },
+    validateHat: async function () {
+      const response = await fetch(`${window.location.origin}/api/hat/validate`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.people)
+      })
+
+      if (!response.ok) {
+        const body = await response.text()
+        console.log('Response not okay', body)
+        return
+      }
+
+      console.log(response)
     }
   }
 })
