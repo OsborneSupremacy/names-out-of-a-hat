@@ -53,13 +53,17 @@ import UUID from 'uuidjs'
     ] as Person[]
   }),
   methods: {
+    saveToLocal () {
+      localStorage.setItem('noaah-people', JSON.stringify(this.people))
+    },
     addPerson () {
-      this.personBeingAdded = { name: '', email: '' } as Person
+      this.personBeingAdded = { id: UUID.generate(), name: '', email: '' } as Person
       this.addMode = true
     },
     commitAdd: function (person: Person) {
       this.people.push(person)
       this.addMode = false
+      this.saveToLocal()
     },
     cancelAdd: function () {
       this.addMode = false
@@ -72,6 +76,7 @@ import UUID from 'uuidjs'
         return
       }
       p2.splice(p2.indexOf(foundPerson!), 1)
+      this.saveToLocal()
     },
     validateHat: async function () {
       const response = await fetch(`${window.location.origin}/api/hat/validate`, {
@@ -87,8 +92,7 @@ import UUID from 'uuidjs'
         console.log('Response not okay', body)
         return
       }
-
-      console.log(response)
+      this.saveToLocal()
     }
   }
 })
