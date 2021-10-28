@@ -4,7 +4,7 @@
     </div>
 
     <PersonDisplay v-for="person in people" :key="person.name" :person="person"/>
-    <PersonAdd v-if="addingPerson" :person="personBeingAdded" :cancelFunction="cancelAdd" />
+    <PersonAdd v-if="addingPerson" :person="personBeingAdded" :commitFunction="commitAdd" :cancelFunction="cancelAdd" />
 
     <p v-if="!addingPerson" >
       <button type="button" @click="addPerson" class="btn btn-primary">Add Person</button>
@@ -36,6 +36,10 @@ import PersonAdd from '@/views/PersonAdd.vue'
     addPerson () {
       this.personBeingAdded = { name: '', email: '', phone: '' } as Person
       this.addingPerson = true
+    },
+    commitAdd: function (person: Person) {
+      this.people.push(person)
+      this.addingPerson = false
     },
     cancelAdd: function () {
       this.addingPerson = false

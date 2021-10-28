@@ -20,7 +20,7 @@
                 <label for="Phone">Phone</label>
             </div>
 
-            <a href="#" class="btn btn-primary">Add</a>&nbsp;
+            <a href="#" class="btn btn-primary" @click="commit" >Add</a>&nbsp;
             <a href="#" class="btn btn-danger" @click="cancel" >Cancel</a>
 
         </div>
@@ -36,11 +36,15 @@ import Person from '@/components/Person.vue'
 @Options({
   props: {
     person: Person,
-    cancelFunction: () => Boolean
+    cancelFunction: () => Boolean,
+    commitFunction: (person: Person) => Boolean
   },
   methods: {
     cancel () {
       this.cancelFunction()
+    },
+    commit () {
+      this.commitFunction(this.person)
     }
   }
 })
