@@ -20,8 +20,24 @@
         />
 
       <p v-if="!addMode" >
-        <button type="button" @click="addPerson" class="btn btn-primary">Add Person</button>
+        <button type="button" @click="addPerson" class="btn btn-primary">Add a Name</button>
       </p>
+
+      <div v-if="people.length === 0 && !addMode" class="alert alert-primary" role="alert">
+        There currently aren't any names in the hat! Click the button below to add one.
+      </div>
+
+      <div v-if="people.length === 1 && !addMode" class="alert alert-primary" role="alert">
+        There's one name in the hat so far. At at least two more for a valid gift exchange.
+      </div>
+
+      <div v-if="people.length === 2 && !addMode" class="alert alert-primary" role="alert">
+        Great job, that's two names in the hat! Add one more for a valid gift exchange.
+      </div>
+
+      <div v-if="people.length >= 3 && !addMode" class="alert alert-primary" role="alert">
+        You have {{ people.length }} names in the hat. That's enough for a gift exchange, but you can add more (up to 100). Once everyone's added. Click the <b>Shake Up The Hat</b> button below.
+      </div>
     </div>
   </div>
 
@@ -36,7 +52,6 @@ import Person from '@/components/Person.vue'
 import PersonDisplay from '@/views/PersonDisplay.vue'
 import PersonAdd from '@/views/PersonAdd.vue'
 import UUID from 'uuidjs'
-import { onMounted } from '@vue/runtime-core'
 
 @Options({
   components: {
@@ -50,7 +65,7 @@ import { onMounted } from '@vue/runtime-core'
   }),
   methods: {
     saveToLocal () {
-      localStorage.setItem('noaah-people', JSON.stringify(this.people))
+      localStorage.setItem('nooah-people', JSON.stringify(this.people))
     },
     addPerson () {
       this.personBeingAdded = { id: UUID.generate(), name: '', email: '' } as Person
@@ -75,6 +90,7 @@ import { onMounted } from '@vue/runtime-core'
       this.saveToLocal()
     },
     validateHat: async function () {
+      this.saveToLocal()
       const response = await fetch(`${window.location.origin}/api/hat/validate`, {
         method: 'post',
         headers: {
@@ -86,15 +102,13 @@ import { onMounted } from '@vue/runtime-core'
       if (!response.ok) {
         const body = await response.text()
         console.log('Response not okay', body)
-        return
       }
-      this.saveToLocal()
     }
   },
   mounted () {
-    if (localStorage.getItem('noaah-people')) {
+    if (localStorage.getItem('nooah-people')) {
       try {
-        this.people = (JSON.parse(localStorage.getItem('noaah-people') as string) as Person[])
+        this.people = (JSON.parse(localStorage.getItem('nooah-people') as string) as Person[])
       } catch (error) {
         console.log('Could not load people from local storage')
       }

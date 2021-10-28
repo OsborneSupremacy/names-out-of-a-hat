@@ -1,7 +1,7 @@
 <template>
     <div class="card mb-3" style="width: 18rem;display: inline-flex;margin: 10px;">
-        <h5 v-if="person.name.trim().length === 0" class="card-header">Add Person</h5>
-        <h5 v-if="person.name.trim().length > 0" class="card-header">{{ person.name }}</h5>
+        <h5 v-if="person.name.trim().length === 0" class="card-header bg-info">Add Person</h5>
+        <h5 v-if="person.name.trim().length > 0" class="card-header bg-info">{{ person.name }}</h5>
         <div class="card-body">
             <NameEdit :person="person" />
             <EmailEdit :person="person" />

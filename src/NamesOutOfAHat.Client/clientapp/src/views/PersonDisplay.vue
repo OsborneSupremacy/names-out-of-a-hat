@@ -1,7 +1,7 @@
 <template>
     <div class="card mb-3" style="width: 18rem;display: inline-flex;margin: 10px;">
-      <h5 v-if="person.name.trim().length === 0" class="card-header">Edit Person</h5>
-      <h5 v-if="person.name.trim().length > 0" class="card-header">{{ person.name }}</h5>
+      <h5 v-if="person.name.trim().length === 0" class="card-header bg-info">Edit Person</h5>
+      <h5 v-if="person.name.trim().length > 0" class="card-header bg-info">{{ person.name }}</h5>
       <!-- display mode stuff -->
       <ul v-if="!editMode" class="list-group list-group-flush">
         <li v-if="person.email.length > 0" class="list-group-item">📧 {{ person.email }}</li>
