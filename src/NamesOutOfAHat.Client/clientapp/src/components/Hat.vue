@@ -36,6 +36,7 @@ import Person from '@/components/Person.vue'
 import PersonDisplay from '@/views/PersonDisplay.vue'
 import PersonAdd from '@/views/PersonAdd.vue'
 import UUID from 'uuidjs'
+import { onMounted } from '@vue/runtime-core'
 
 @Options({
   components: {
@@ -44,13 +45,8 @@ import UUID from 'uuidjs'
   },
   data: () => ({
     addMode: Boolean(false),
-    personBeingAdded: { id: UUID.generate(), name: '', email: '' } as Person,
-    people: [
-      { id: UUID.generate(), name: 'Bob', email: 'bob@gmail.com' },
-      { id: UUID.generate(), name: 'Sue', email: '' },
-      { id: UUID.generate(), name: 'Mike', email: 'mike@gmail.com' },
-      { id: UUID.generate(), name: 'Sally', email: 'sally@gmail.com' }
-    ] as Person[]
+    personBeingAdded: { } as Person,
+    people: [] as Person[]
   }),
   methods: {
     saveToLocal () {
@@ -93,6 +89,15 @@ import UUID from 'uuidjs'
         return
       }
       this.saveToLocal()
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('noaah-people')) {
+      try {
+        this.people = (JSON.parse(localStorage.getItem('noaah-people') as string) as Person[])
+      } catch (error) {
+        console.log('Could not load people from local storage')
+      }
     }
   }
 })

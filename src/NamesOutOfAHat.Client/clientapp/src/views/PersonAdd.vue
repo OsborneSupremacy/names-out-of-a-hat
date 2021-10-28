@@ -5,7 +5,7 @@
         <div class="card-body">
             <NameEdit :person="person" />
             <EmailEdit :person="person" />
-            <a href="#" class="btn btn-sm btn-primary" @click="commit" >Add</a>&nbsp;
+            <button type="submit" class="btn btn-sm btn-primary" @click="commit" >Add</button>&nbsp;
             <a href="#" class="btn btn-sm btn-danger" @click="cancel" >Cancel</a>
         </div>
     </div>
