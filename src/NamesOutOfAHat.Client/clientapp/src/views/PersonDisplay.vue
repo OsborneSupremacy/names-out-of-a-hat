@@ -7,7 +7,7 @@
         <li v-if="person.email.length > 0" class="list-group-item">📧 {{ person.email }}</li>
         <li class="list-group-item">
           <a href="#" class="btn btn-sm btn-primary" @click="editMode = true" >Edit</a>&nbsp;
-          <a href="#" class="btn btn-sm btn-danger" @click="remove" >Delete</a>
+          <a href="#" class="btn btn-sm btn-danger" @click="remove" >Remove</a>
         </li>
       </ul>
       <!-- edit mode stuff -->
