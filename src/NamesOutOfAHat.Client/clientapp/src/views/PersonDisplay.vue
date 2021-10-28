@@ -3,7 +3,6 @@
       <h5 class="card-header">{{ person.name }}</h5>
       <ul class="list-group list-group-flush">
         <li v-if="person.email.length > 0" class="list-group-item">📧 {{ person.email }}</li>
-        <li v-if="person.phone.length > 0" class="list-group-item">📱 {{ person.phone }}</li>
         <li class="list-group-item">
           <a href="#" class="btn btn-sm btn-primary">Edit</a>&nbsp;
           <a href="#" class="btn btn-sm btn-danger" @click="remove" >Delete</a>

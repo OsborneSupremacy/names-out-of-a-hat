@@ -15,11 +15,6 @@
                 <label for="Email">Email</label>
             </div>
 
-            <div class="form-floating mb-3">
-                <input type="tel" class="form-control" v-model="person.phone" />
-                <label for="Phone">Phone</label>
-            </div>
-
             <a href="#" class="btn btn-primary" @click="commit" >Add</a>&nbsp;
             <a href="#" class="btn btn-danger" @click="cancel" >Cancel</a>
 

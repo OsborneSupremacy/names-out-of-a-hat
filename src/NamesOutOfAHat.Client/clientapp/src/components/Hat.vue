@@ -38,15 +38,15 @@ import UUID from 'uuidjs'
     addingPerson: Boolean(false),
     personBeingAdded: { id: UUID.generate(), name: '' } as Person,
     people: [
-      { id: UUID.generate(), name: 'Bob', email: 'bob@gmail.com', phone: '111-111-1111' },
-      { id: UUID.generate(), name: 'Sue', email: '', phone: '222-111-1111' },
-      { id: UUID.generate(), name: 'Mike', email: 'mike@gmail.com', phone: '' },
-      { id: UUID.generate(), name: 'Sally', email: 'sally@gmail.com', phone: '444-111-1111' }
+      { id: UUID.generate(), name: 'Bob', email: 'bob@gmail.com' },
+      { id: UUID.generate(), name: 'Sue', email: '' },
+      { id: UUID.generate(), name: 'Mike', email: 'mike@gmail.com' },
+      { id: UUID.generate(), name: 'Sally', email: 'sally@gmail.com' }
     ] as Person[]
   }),
   methods: {
     addPerson () {
-      this.personBeingAdded = { name: '', email: '', phone: '' } as Person
+      this.personBeingAdded = { name: '', email: '' } as Person
       this.addingPerson = true
     },
     commitAdd: function (person: Person) {
