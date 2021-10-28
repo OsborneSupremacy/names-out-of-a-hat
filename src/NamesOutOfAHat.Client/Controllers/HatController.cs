@@ -37,9 +37,9 @@ namespace NamesOutOfAHat.Client.Controllers
                 case 0:
                     return new BadRequestObjectResult(new ValidationResult("A gift exchange like this needs at least three people"));
                 case 1:
-                    return new BadRequestObjectResult(new ValidationResult("One person makes for a lonely gift exchange. At at least two more people."));
+                    return new BadRequestObjectResult(new ValidationResult("One person makes for a lonely gift exchange. Add at least two more people."));
                 case 2:
-                    return new BadRequestObjectResult(new ValidationResult("If your gift exchange has two people, they're going to get each other's name. No reason to pick names out of a hat! Add at least one more person."));
+                    return new BadRequestObjectResult(new ValidationResult("If your gift exchange has exactly two people, they're going to get each other's name. No reason to pick names out of a hat! Add at least one more person."));
             }
 
             // validate emails
