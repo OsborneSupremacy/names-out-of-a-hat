@@ -12,14 +12,8 @@
       </ul>
       <!-- edit mode stuff -->
       <div v-if="editMode" class="card-body">
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="person.name" />
-          <label for="Name">Name</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" v-model="person.email" />
-          <label for="Email">Email</label>
-        </div>
+        <NameEdit :person="person" />
+        <EmailEdit :person="person" />
         <a href="#" class="btn btn-sm btn-primary" @click="editMode = false" >Close</a>
       </div>
     </div>
@@ -28,8 +22,14 @@
 <script lang="ts" >
 import { Options, Vue } from 'vue-class-component'
 import Person from '@/components/Person.vue'
+import NameEdit from '@/views/NameEdit.vue'
+import EmailEdit from '@/views/EmailEdit.vue'
 
 @Options({
+  components: {
+    NameEdit,
+    EmailEdit
+  },
   props: {
     person: Person,
     removeFunction: (person: Person) => Boolean
