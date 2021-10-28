@@ -1,10 +1,13 @@
 <template>
     <div class="card mb-3" style="width: 18rem;display: inline-flex;margin: 10px;">
-        <div class="card-body">
-            <h5 class="card-title">{{ person.name }}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+      <h5 class="card-header">{{ person.name }}</h5>
+      <ul class="list-group list-group-flush">
+        <li v-if="person.email.length > 0" class="list-group-item">📧 {{ person.email }}</li>
+        <li v-if="person.phone.length > 0" class="list-group-item">📱 {{ person.phone }}</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
     </div>
 </template>
 

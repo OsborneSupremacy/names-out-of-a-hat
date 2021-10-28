@@ -2,20 +2,21 @@
     <div class="card" style="width: 18rem;display: inline-flex;margin: 10px;">
 
         <div class="card-body">
-            <h5 class="card-title">Card title - {{ person.name }}</h5>
+            <h5 v-if="person.name.length === 0" class="card-title">Add Person</h5>
+            <h5 v-if="person.name.length > 0" class="card-title">{{ person.name }}</h5>
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" :value="person.name" />
+                <input type="text" class="form-control" v-model="person.name" />
                 <label for="Name">Name</label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" />
+                <input type="email" class="form-control" v-model="person.email" />
                 <label for="Email">Email</label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="tel" class="form-control" />
+                <input type="tel" class="form-control" v-model="person.phone" />
                 <label for="Phone">Phone</label>
             </div>
 

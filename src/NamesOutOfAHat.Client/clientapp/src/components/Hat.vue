@@ -26,15 +26,15 @@ import PersonAdd from '@/views/PersonAdd.vue'
     addingPerson: Boolean(false),
     personBeingAdded: { name: '' } as Person,
     people: [
-      { name: 'Bob' },
-      { name: 'Sue' },
-      { name: 'Mike' },
-      { name: 'Sally' }
+      { name: 'Bob', email: 'bob@gmail.com', phone: '111-111-1111' },
+      { name: 'Sue', email: '', phone: '222-111-1111' },
+      { name: 'Mike', email: 'mike@gmail.com', phone: '' },
+      { name: 'Sally', email: 'sally@gmail.com', phone: '444-111-1111' }
     ] as Person[]
   }),
   methods: {
     addPerson () {
-      this.personBeingAdded = { name: 'xczc' } as Person
+      this.personBeingAdded = { name: '', email: '', phone: '' } as Person
       this.addingPerson = true
     },
     cancelAdd: function () {
