@@ -2,7 +2,7 @@
   <div class="bg-light rounded-3" >
     <div class="container-fluid py-5" >
       <div class="jumbotron">
-          <h1 class="display-4">Put everyone's name in the hat!</h1>
+        <h1 class="display-4">Put everyone's name in the hat!</h1>
       </div>
 
       <PersonDisplay
@@ -36,13 +36,20 @@
       </div>
 
       <div v-if="people.length >= 3 && !addMode" class="alert alert-primary" role="alert">
-        You have {{ people.length }} names in the hat. That's enough for a gift exchange, but you can add more (up to 100). Once everyone's added. Click the <b>Shake Up The Hat</b> button below.
+        You have {{ people.length }} names in the hat. That's enough for a gift exchange, but you can add more (up to {{ maxPeople }}). Once everyone's added. Click the <b>Shake Up The Hat</b> button below.
+      </div>
+
+      <div class="container-fluid py-5">
+        <button type="button" @click="validateHat" class="btn btn-primary btn-lg">Shake Up The Hat</button>
+      </div>
+
+      <div v-if="hatIsInvalid" class="alert alert-danger" role="alert">
+        <h4>There is a problem with the names in the hat.</h4>
+        <ul v-if="hatIsInvalidReason.length > 0">
+          <li v-for="error in hatIsInvalidReason" :key="error" >{{ error }}</li>
+        </ul>
       </div>
     </div>
-  </div>
-
-  <div class="container-fluid py-5" >
-    <button type="button" @click="validateHat" class="btn btn-primary btn-lg">Shake Up The Hat</button>
   </div>
 </template>
 
@@ -52,6 +59,7 @@ import Person from '@/components/Person.vue'
 import PersonDisplay from '@/views/PersonDisplay.vue'
 import PersonAdd from '@/views/PersonAdd.vue'
 import UUID from 'uuidjs'
+import ResponseModel from '@/components/ResponseModel.vue'
 
 @Options({
   components: {
@@ -59,6 +67,9 @@ import UUID from 'uuidjs'
     PersonAdd
   },
   data: () => ({
+    maxPeople: 30,
+    hatIsInvalid: false,
+    hatIsInvalidReason: [] as string[],
     addMode: Boolean(false),
     personBeingAdded: { } as Person,
     people: [] as Person[]
@@ -91,6 +102,7 @@ import UUID from 'uuidjs'
     },
     validateHat: async function () {
       this.saveToLocal()
+
       const response = await fetch(`${window.location.origin}/api/hat/validate`, {
         method: 'post',
         headers: {
@@ -100,8 +112,13 @@ import UUID from 'uuidjs'
       })
 
       if (!response.ok) {
-        const body = await response.text()
-        console.log('Response not okay', body)
+        this.hatIsInvalid = true
+        try {
+          const responseModel : ResponseModel = await response.json()
+          this.hatIsInvalidReason = responseModel.errors
+        } catch (error) {
+
+        }
       }
     }
   },
