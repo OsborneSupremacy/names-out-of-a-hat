@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NamesOutOfAHat.Interface;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NamesOutOfAHat.Client.Models
+namespace NamesOutOfAHat.Models
 {
-    public class Person
+    public class Person : IPerson
     {
         [Required]
         public Guid Id { get; set; }

@@ -6,6 +6,17 @@
       <ul v-if="!editMode" class="list-group list-group-flush">
         <li v-if="person.email.length > 0" class="list-group-item">📧 {{ person.email }}</li>
         <li class="list-group-item">
+          <ul v-if="people.length > 0">
+            <label class="form-label"><b>🎁 Eligible Recipients</b></label>
+            <div v-for="sp in people" :key="sp.id" class="form-check" style="text-align: left">
+              <input class="form-check-input" type="checkbox" value="" :id="'cb_' + person.id + '_' + sp.id">
+              <label class="form-check-label" :for="'cb_' + person.id + '_' + sp.id">
+                {{ sp.name }}
+              </label>
+            </div>
+          </ul>
+        </li>
+        <li class="list-group-item">
           <a href="#" class="btn btn-sm btn-primary" @click="editMode = true" >Edit</a>&nbsp;
           <a href="#" class="btn btn-sm btn-danger" @click="remove" >Remove</a>
         </li>
@@ -32,6 +43,7 @@ import EmailEdit from '@/views/EmailEdit.vue'
   },
   props: {
     person: Person,
+    people: [] as Person[],
     removeFunction: (person: Person) => Boolean
   },
   data: () => ({
