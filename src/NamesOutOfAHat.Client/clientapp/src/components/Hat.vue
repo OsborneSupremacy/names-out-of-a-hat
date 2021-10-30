@@ -77,6 +77,8 @@ import ResponseModel from '@/components/ResponseModel.vue'
   }),
   methods: {
     saveToLocal () {
+      this.hatIsInvalid = false
+      this.hatis = [] as string[]
       localStorage.setItem('nooah-people', JSON.stringify(this.people))
     },
     addPerson () {

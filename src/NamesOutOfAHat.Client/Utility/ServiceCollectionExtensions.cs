@@ -12,17 +12,16 @@ namespace NamesOutOfAHat.Client.Utility
             var services = Assembly.GetAssembly(type)
                 .GetTypes()
                 .Where(x => !x.IsAbstract)
-                .Where(x => x.IsPublic)
-                ;
+                .Where(x => x.IsPublic);
 
             foreach(var service in services)
             {
                 var interfaces = service.GetInterfaces().ToList();
                 
                 foreach(var i in interfaces)
-                    serviceCollection.AddSingleton(i, service);
+                    serviceCollection.AddScoped(i, service);
 
-                serviceCollection.AddSingleton(service);
+                serviceCollection.AddScoped(service);
             }
 
             return serviceCollection;
