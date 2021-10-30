@@ -14,9 +14,11 @@ namespace NamesOutOfAHat.Service
             ErrorMessages = new List<string>();
         }
 
-        protected void AddErrors<T>(IList<T> duplicateValues, string messageTemplate, Func<T, string> valueFormatter) =>
-            ErrorMessages.ToList().AddRange(from value in duplicateValues
-                                   select messageTemplate.Replace("{value}", valueFormatter(value)));
+        protected void AddErrors<T>(IList<T> duplicateValues, string messageTemplate, Func<T, string> valueFormatter)
+        {
+            foreach (var value in duplicateValues)
+                ErrorMessages.Add(messageTemplate.Replace("{value}", valueFormatter(value)));
+        }
 
         protected static (bool, IList<T> duplicateValues) DuplicatesExist<T>(
             IList<IPerson> people,
