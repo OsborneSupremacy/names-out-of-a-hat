@@ -24,11 +24,7 @@ namespace NamesOutOfAHat.Client.Controllers
         {
             var response = new ResponseModel();
 
-            // TODO: Find a better way to do this.
-            var people2 = new List<IPerson>();
-            people2.AddRange(people);
-
-            (response.Success, response.Errors) = _validationService.Validate(people2);
+            (response.Success, response.Errors) = _validationService.Validate(new List<IPerson>(people));
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NamesOutOfAHat.Models
 {
-    public class Person : IPerson
+    public record Person : IPerson
     {
         [Required]
         public Guid Id { get; set; }
