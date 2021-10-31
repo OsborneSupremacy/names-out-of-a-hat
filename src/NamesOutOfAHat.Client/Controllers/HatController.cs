@@ -28,12 +28,9 @@ namespace NamesOutOfAHat.Client.Controllers
             var people2 = new List<IPerson>();
             people2.AddRange(people);
 
-            var (isValid, errors) = _validationService.Validate(people2);
+            (response.Success, response.Errors) = _validationService.Validate(people2);
 
-            response.Errors = errors;
-            response.Success = isValid;
-
-            if (!isValid)
+            if (!response.Success)
                 return new BadRequestObjectResult(response);
 
             return new OkObjectResult(response);

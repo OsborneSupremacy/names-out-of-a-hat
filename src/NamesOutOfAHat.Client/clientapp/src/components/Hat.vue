@@ -2,7 +2,7 @@
   <div class="bg-light rounded-3" >
     <div class="container-fluid py-5" >
       <div class="jumbotron">
-        <h1 class="display-4">Put everyone's name in the hat!</h1>
+        <h1 class="display-5">Put everyone's name in the hat!</h1>
       </div>
 
       <PersonDisplay

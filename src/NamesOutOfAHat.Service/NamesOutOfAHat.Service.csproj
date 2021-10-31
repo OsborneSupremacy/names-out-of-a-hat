@@ -6,11 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NamesOutOfAHat.Interface\NamesOutOfAHat.Interface.csproj" />
     <ProjectReference Include="..\NamesOutOfAHat.Models\NamesOutOfAHat.Models.csproj" />
+    <ProjectReference Include="..\NamesOutOfAHat.Utility\NamesOutOfAHat.Utility.csproj" />
   </ItemGroup>
 
 </Project>

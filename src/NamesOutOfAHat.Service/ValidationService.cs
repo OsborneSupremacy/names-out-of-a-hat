@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NamesOutOfAHat.Interface;
+using NamesOutOfAHat.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace NamesOutOfAHat.Service
 {
+    [ServiceLifetime(ServiceLifetime.Scoped)]
     public class ValidationService
     {
         private const int _max = 30;

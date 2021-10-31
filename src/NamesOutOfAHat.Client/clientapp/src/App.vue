@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
+    <h1 class="display-3">🎩 Names Out of A Hat 🎩</h1>
     <router-view/>
   </div>
 </template>

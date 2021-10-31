@@ -1,4 +1,6 @@
-﻿using NamesOutOfAHat.Interface;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NamesOutOfAHat.Interface;
+using NamesOutOfAHat.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +41,8 @@ namespace NamesOutOfAHat.Service
         }
     }
 
+    [RegistrationTarget(typeof(IDuplicateCheckService))]
+    [ServiceLifetime(ServiceLifetime.Scoped)]
     public class NameDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
         protected static Func<IList<IPerson>, IEnumerable<string>> _nameSelector = (IList<IPerson> people) =>
@@ -61,6 +65,8 @@ namespace NamesOutOfAHat.Service
         }
     }
 
+    [RegistrationTarget(typeof(IDuplicateCheckService))]
+    [ServiceLifetime(ServiceLifetime.Scoped)]
     public class EmailDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
         protected static Func<IList<IPerson>, IEnumerable<string>> _emailSelector = (IList<IPerson> people) =>
@@ -88,6 +94,8 @@ namespace NamesOutOfAHat.Service
     /// happen if there was a bug on the frontend. Probably not likely, but could yield bad consequences
     /// (e.g. a person being assigned to themself)
     /// </summary>
+    [RegistrationTarget(typeof(IDuplicateCheckService))]
+    [ServiceLifetime(ServiceLifetime.Scoped)]
     public class IdDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
         protected static Func<IList<IPerson>, IEnumerable<Guid>> _idSelector = (IList<IPerson> people) =>

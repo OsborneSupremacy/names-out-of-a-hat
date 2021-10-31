@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NamesOutOfAHat.Client.Utility;
 using NamesOutOfAHat.Service;
+using NamesOutOfAHat.Utility;
 using VueCliMiddleware;
 
 namespace NamesOutOfAHat.Client
