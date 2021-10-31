@@ -7,11 +7,12 @@
 
   <PropertyGroup>
     <SpaRoot>ClientApp\</SpaRoot>
+    <Nullable>enable</Nullable>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="VueCliMiddleware" Version="3.0.0" />
+    <PackageReference Include="VueCliMiddleware" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,6 +6,6 @@ namespace NamesOutOfAHat.Client.Models
     {
         public bool Success { get; set; }
 
-        public IList<string> Errors { get; set; }
+        public IList<string> Errors { get; set; } = default!;
     }
 }

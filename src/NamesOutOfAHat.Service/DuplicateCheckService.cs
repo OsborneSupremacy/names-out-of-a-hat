@@ -11,15 +11,24 @@ namespace NamesOutOfAHat.Service
     {
         protected IList<string> ErrorMessages { get; set; }
 
+        protected HashSet<string> ErrorValues { get; set; }
+
         protected DuplicateCheckService()
         {
             ErrorMessages = new List<string>();
+            ErrorValues = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
         protected void AddErrors<T>(IList<T> duplicateValues, string messageTemplate, Func<T, string> valueFormatter)
         {
             foreach (var value in duplicateValues)
-                ErrorMessages.Add(messageTemplate.Replace("{value}", valueFormatter(value)));
+            {
+                var valueString = valueFormatter(value);
+                // don't add the error value if it already exists
+                if (ErrorValues.Contains(valueString)) continue;
+                ErrorValues.Add(valueString);
+                ErrorMessages.Add(messageTemplate.Replace("{value}", valueString));
+            }
         }
 
         protected static (bool, IList<T> duplicateValues) DuplicatesExist<T>(
@@ -49,7 +58,7 @@ namespace NamesOutOfAHat.Service
             people.Select(x => x.Name.Trim());
 
         protected static Func<IPerson, string, bool> _nameEquals = (IPerson person, string value) =>
-            person.Name.Equals(value, StringComparison.OrdinalIgnoreCase);
+            person.Name.Trim().Equals(value, StringComparison.OrdinalIgnoreCase);
 
         public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
         {
@@ -73,7 +82,7 @@ namespace NamesOutOfAHat.Service
             people.Select(x => x.Email.Trim());
 
         protected static Func<IPerson, string, bool> _emailEquals = (IPerson person, string value) =>
-            person.Email.Equals(value, StringComparison.OrdinalIgnoreCase);
+            person.Email.Trim().Equals(value, StringComparison.OrdinalIgnoreCase);
 
         public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
         {
@@ -81,7 +90,7 @@ namespace NamesOutOfAHat.Service
             if (!duplicatesExist) return (false, ErrorMessages);
 
             AddErrors(duplicateValues,
-    "The email address, `{email}`, is associated with more than one person in your gift exchange. If multiple names are sent to that address, that's going to cause problems. Everyone needs their own address.",
+    "The email address, `{value}`, is associated with more than one person in your gift exchange. If multiple names are sent to that address, that's going to cause problems. Everyone needs their own address.",
                 (string value) => { return value; }
             );
 
@@ -102,7 +111,7 @@ namespace NamesOutOfAHat.Service
             people.Select(x => x.Id);
 
         protected static Func<IPerson, Guid, bool> _idEquals = (IPerson person, Guid value) =>
-            person.Name.Equals(value);
+            person.Id.Equals(value);
 
         public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
         {
