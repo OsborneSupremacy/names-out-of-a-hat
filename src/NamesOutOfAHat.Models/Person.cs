@@ -7,13 +7,13 @@ namespace NamesOutOfAHat.Models
     public record Person : IPerson
     {
         [Required]
-        public Guid Id { get; set; } = default!;
+        public Guid Id { get; init; } = default!;
 
         [Required(AllowEmptyStrings = false)]
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
         [Required(AllowEmptyStrings = false)]
         [EmailAddress]
-        public string Email { get; set; } = default!;
+        public string Email { get; init; } = default!;
     }
 }

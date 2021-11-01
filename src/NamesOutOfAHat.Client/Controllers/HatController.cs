@@ -21,11 +21,11 @@ namespace NamesOutOfAHat.Client.Controllers
 
         [HttpPost]
         [Route("api/hat/validate")]
-        public async Task<IActionResult> ValidateAsync([FromBody] IList<Person> people)
+        public async Task<IActionResult> ValidateAsync([FromBody] IList<Giver> people)
         {
             var response = new ResponseModel();
 
-            (response.Success, response.Errors) = _validationService.Validate(people.Select(x => x as IPerson).ToList());
+            (response.Success, response.Errors) = _validationService.Validate(people.Select(x => x as IGiver).ToList());
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);

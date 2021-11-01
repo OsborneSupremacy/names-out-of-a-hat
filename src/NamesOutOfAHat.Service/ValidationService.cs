@@ -20,7 +20,7 @@ namespace NamesOutOfAHat.Service
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
-        public (bool isValid, IList<string> errors) Validate(IList<IPerson> people)
+        public (bool isValid, IList<string> errors) Validate(IList<IGiver> people)
         {
             // basic component model validation
             foreach (var person in people)
@@ -29,7 +29,7 @@ namespace NamesOutOfAHat.Service
                 var isValid = Validator
                     .TryValidateObject(person, new ValidationContext(person), results, true);
                 if (!isValid)
-                    return (false, results.Select(x => x.ErrorMessage).ToList());
+                    return (false, results.Select(x => x.ErrorMessage ?? string.Empty).ToList());
             }
 
             // validate count
@@ -39,7 +39,7 @@ namespace NamesOutOfAHat.Service
                 1 => (false, errorToList("One person makes for a lonely gift exchange. Add at least two more people.")),
                 2 => (false, errorToList("If your gift exchange has exactly two people, they're going to get each other's name. No reason to pick names out of a hat! Add at least one more person.")),
                 > _max => (false, errorToList($"{_max} people is the maximum. How did this get past frontend validation ? Are you trying to hack this app?")),
-                _ => (true, null)
+                _ => (true, Enumerable.Empty<string>().ToList())
             };
 
             if (!countsAreGood)
@@ -49,14 +49,14 @@ namespace NamesOutOfAHat.Service
 
             foreach (var duplicateCheckService in duplicateCheckServices)
             {
-                var (duplicatesExist, errorMessages) = duplicateCheckService.Execute(people);
+                var (duplicatesExist, errorMessages) = duplicateCheckService.Execute(people.Select(x => x.Person).ToList());
                 if (duplicatesExist)
                     return (false, errorMessages);
             }
 
             return (true, Enumerable.Empty<string>().ToList());
 
-            IList<string> errorToList(string error) =>
+            static IList<string> errorToList(string error) =>
                 new List<string>() { error };
         }
     }
