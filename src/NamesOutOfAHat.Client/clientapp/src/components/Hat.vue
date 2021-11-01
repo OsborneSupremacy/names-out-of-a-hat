@@ -120,7 +120,6 @@ import ResponseModel from '@/components/ResponseModel.vue'
           const responseModel : ResponseModel = await response.json()
           this.hatIsInvalidReason = responseModel.errors
         } catch (error) {
-
         }
       }
     }

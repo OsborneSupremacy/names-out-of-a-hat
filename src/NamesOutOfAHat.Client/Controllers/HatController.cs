@@ -6,6 +6,7 @@ using System;
 using NamesOutOfAHat.Service;
 using NamesOutOfAHat.Interface;
 using NamesOutOfAHat.Models;
+using System.Linq;
 
 namespace NamesOutOfAHat.Client.Controllers
 {
@@ -24,7 +25,7 @@ namespace NamesOutOfAHat.Client.Controllers
         {
             var response = new ResponseModel();
 
-            (response.Success, response.Errors) = _validationService.Validate(new List<IPerson>(people));
+            (response.Success, response.Errors) = _validationService.Validate(people.Select(x => x as IPerson).ToList());
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);
