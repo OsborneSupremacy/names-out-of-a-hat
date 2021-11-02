@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NamesOutOfAHat.Interface;
 using NamesOutOfAHat.Models;
@@ -66,7 +67,59 @@ namespace NamesOutOfAHat.Service.Tests
             errors.Count().Should().Be(1);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Validate_Expected_Behavior(bool duplicatesExist)
+        {
+            // arrange
+            var autoFixture = new Fixture().AddAutoMoqCustomization();
+            var cmvs = autoFixture.Freeze<Mock<IComponentModelValidationService>>();
+            
+            cmvs.Setup(x => x.Validate(It.IsAny<IList<IGiver>>()))
+                .Returns((true, Enumerable.Empty<string>().ToList()));
 
+            using var serviceProvider = new ServiceCollection()
+                .AddScoped(typeof(ValidationService))
+                .AddScoped<IDuplicateCheckService>(provider => new MockDuplicateCheckService(duplicatesExist))
+                .AddScoped(provider => cmvs.Object)
+                .BuildServiceProvider();
+            
+            IList<IGiver> input = new List<IGiver>();
 
+            int x = 0;
+            while (x++ < 3)
+                input.Add(new Giver());
+
+            var service = serviceProvider.GetService<ValidationService>();
+
+            // act
+            var (isValid, errors) = service!.Validate(input);
+
+            // assert
+            isValid.Should().Be(!duplicatesExist);
+            if (duplicatesExist)
+                errors.Count().Should().Be(1);
+        }
+
+        protected class MockDuplicateCheckService : IDuplicateCheckService
+        {
+            public bool DuplicatesExist { get; set; }
+
+            public MockDuplicateCheckService(bool returnDuplicatesExist)
+            {
+                DuplicatesExist = returnDuplicatesExist;
+            }
+
+            private List<string> ErrorMessages =>
+                DuplicatesExist 
+                    ? new List<string>() { "Duplicates exist" } 
+                    : Enumerable.Empty<string>().ToList();
+
+            public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
+            {
+                return (!DuplicatesExist, ErrorMessages);
+            }
+        }
     }
 }
