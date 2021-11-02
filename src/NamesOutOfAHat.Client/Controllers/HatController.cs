@@ -25,7 +25,9 @@ namespace NamesOutOfAHat.Client.Controllers
         {
             var response = new ResponseModel();
 
-            (response.Success, response.Errors) = _validationService.Validate(people.Select(x => x as IGiver).ToList());
+            (response.Success, response.Errors) = _validationService
+                .Validate(people.Select(x => x as IGiver)
+                .ToList());
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);
