@@ -5,11 +5,13 @@ import Recipient from '@/components/Recipient.vue'
 
 @Options({
   props: {
+    id: String,
     person: {} as Person,
     recipients: [] as Recipient[]
   }
 })
 export default class Giver extends Vue {
+  id!: string
   person!: Person
   recipients!: Recipient[]
 }
