@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NamesOutOfAHat.Client.Models
+namespace NamesOutOfAHat.Api.Models
 {
     public class ResponseModel
     {

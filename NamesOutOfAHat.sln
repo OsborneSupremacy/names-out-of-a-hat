@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamesOutOfAHat.Utility", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamesOutOfAHat.Service.Tests", "src\NamesOutOfAHat.Service.Tests\NamesOutOfAHat.Service.Tests.csproj", "{B879BBC3-6C4F-4FD9-AF9F-D7551CBC59A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamesOutOfAHat.Test.Utility", "src\NamesOutOfAHat.Test.Utility\NamesOutOfAHat.Test.Utility.csproj", "{0D78D5C6-DD33-4B5C-AB06-3A81E71EC342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamesOutOfAHat.Test.Utility", "src\NamesOutOfAHat.Test.Utility\NamesOutOfAHat.Test.Utility.csproj", "{0D78D5C6-DD33-4B5C-AB06-3A81E71EC342}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamesOutOfAHat.Api", "src\NamesOutOfAHat.Api\NamesOutOfAHat.Api.csproj", "{DC77F06C-DEB9-450E-A436-EE4CF95269E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{0D78D5C6-DD33-4B5C-AB06-3A81E71EC342}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D78D5C6-DD33-4B5C-AB06-3A81E71EC342}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D78D5C6-DD33-4B5C-AB06-3A81E71EC342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC77F06C-DEB9-450E-A436-EE4CF95269E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC77F06C-DEB9-450E-A436-EE4CF95269E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC77F06C-DEB9-450E-A436-EE4CF95269E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC77F06C-DEB9-450E-A436-EE4CF95269E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NamesOutOfAHat.Client.Models;
+using NamesOutOfAHat.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -8,7 +8,7 @@ using NamesOutOfAHat.Interface;
 using NamesOutOfAHat.Models;
 using System.Linq;
 
-namespace NamesOutOfAHat.Client.Controllers
+namespace NamesOutOfAHat.Api.Controllers
 {
     public class HatController : Controller
     {

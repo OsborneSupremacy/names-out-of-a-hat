@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using NamesOutOfAHat.Service;
 using NamesOutOfAHat.Utility;
-using VueCliMiddleware;
 
-namespace NamesOutOfAHat.Client
+namespace NamesOutOfAHat.Api
 {
     public class Startup
     {
@@ -21,13 +21,14 @@ namespace NamesOutOfAHat.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers();
 
             services.RegisterServicesInAssembly(typeof(ValidationService));
 
-            services.AddSpaStaticFiles(configuration =>
+            services.AddSwaggerGen(c =>
             {
-                configuration.RootPath = "clientapp";
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NamesOutOfAHat.Api", Version = "v1" });
             });
         }
 
@@ -37,24 +38,21 @@ namespace NamesOutOfAHat.Client
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NamesOutOfAHat.Api v1"));
             }
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
-            app.UseSpaStaticFiles();
+
+            app.UseCors();
+
             app.UseAuthorization();
 
-            app.UseSpa(spa =>
+            app.UseEndpoints(endpoints =>
             {
-                if (env.IsDevelopment())
-                    spa.Options.SourcePath = "clientapp/";
-                else
-                    spa.Options.SourcePath = "dist";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseVueCli(npmScript: "serve");
-                }
-
+                endpoints.MapControllers();
             });
         }
     }

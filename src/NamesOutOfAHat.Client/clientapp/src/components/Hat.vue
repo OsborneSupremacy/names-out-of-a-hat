@@ -73,7 +73,8 @@ import ResponseModel from '@/components/ResponseModel.vue'
     hatIsInvalidReason: [] as string[],
     addMode: Boolean(false),
     personBeingAdded: { } as Person,
-    people: [] as Person[]
+    people: [] as Person[],
+    baseUrl: 'https://localhost:5010' as string
   }),
   methods: {
     saveToLocal () {
@@ -106,7 +107,7 @@ import ResponseModel from '@/components/ResponseModel.vue'
     validateHat: async function () {
       this.saveToLocal()
 
-      const response = await fetch(`${window.location.origin}/api/hat/validate`, {
+      const response = await fetch(`${this.baseUrl}/api/hat/validate`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
