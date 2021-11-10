@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NamesOutOfAHat.Dto\NamesOutOfAHat.Dto.csproj" />
     <ProjectReference Include="..\NamesOutOfAHat.Interface\NamesOutOfAHat.Interface.csproj" />
     <ProjectReference Include="..\NamesOutOfAHat.Models\NamesOutOfAHat.Models.csproj" />
     <ProjectReference Include="..\NamesOutOfAHat.Service\NamesOutOfAHat.Service.csproj" />

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System;
 using NamesOutOfAHat.Service;
 using NamesOutOfAHat.Interface;
-using NamesOutOfAHat.Models;
 using System.Linq;
+using NamesOutOfAHat.Dto;
 
 namespace NamesOutOfAHat.Api.Controllers
 {
@@ -21,7 +21,7 @@ namespace NamesOutOfAHat.Api.Controllers
 
         [HttpPost]
         [Route("api/hat/validate")]
-        public async Task<IActionResult> ValidateAsync([FromBody] IList<Giver> people)
+        public async Task<IActionResult> ValidateAsync([FromBody] IList<GiverDto> people)
         {
             var response = new ResponseModel();
 
