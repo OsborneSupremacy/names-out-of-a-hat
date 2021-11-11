@@ -23,13 +23,21 @@ namespace NamesOutOfAHat.Service
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
-        public (bool isValid, IList<string> errors) Validate(IList<Giver> people)
+        public (bool isValid, IList<string> errors) Validate(Hat hat)
         {
-            var (isValid, errors) = _componentModelValidationService.Validate(people);
+            var (isValid, errors) = _componentModelValidationService.Validate(hat);
+            if (!isValid) return (false, errors);
+
+            return Validate(hat.Givers);
+        }
+
+        public (bool isValid, IList<string> errors) Validate(IList<Giver> givers)
+        {
+            var (isValid, errors) = _componentModelValidationService.ValidateList(givers);
             if (!isValid) return (false, errors);
 
             // validate count
-            (isValid, errors) = people.Count switch
+            (isValid, errors) = givers.Count switch
             {
                 0 => (false, errorToList("A gift exchange like this needs at least three people")),
                 1 => (false, errorToList("One person makes for a lonely gift exchange. Add at least two more people.")),
@@ -44,7 +52,7 @@ namespace NamesOutOfAHat.Service
 
             foreach (var duplicateCheckService in duplicateCheckServices)
             {
-                (isValid, errors) = duplicateCheckService.Execute(people.Select(x => x.Person).ToList());
+                (isValid, errors) = duplicateCheckService.Execute(givers.Select(x => x.Person).ToList());
                 if (!isValid) return (false, errors);
             }
 

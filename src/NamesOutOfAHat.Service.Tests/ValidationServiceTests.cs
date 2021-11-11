@@ -25,7 +25,7 @@ namespace NamesOutOfAHat.Service.Tests
 
             //
             autoFixture.Freeze<Mock<IComponentModelValidationService>>()
-                .Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
+                .Setup(x => x.ValidateList(It.IsAny<IList<Giver>>()))
                 .Returns((false, expectedErrors));
 
             var service = autoFixture.Create<ValidationService>();
@@ -54,7 +54,7 @@ namespace NamesOutOfAHat.Service.Tests
                 input.Add(new Giver());
 
             autoFixture.Freeze<Mock<IComponentModelValidationService>>()
-                .Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
+                .Setup(x => x.ValidateList(It.IsAny<IList<Giver>>()))
                 .Returns((true, Enumerable.Empty<string>().ToList()));
 
             var service = autoFixture.Create<ValidationService>();
@@ -76,7 +76,7 @@ namespace NamesOutOfAHat.Service.Tests
             var autoFixture = new Fixture().AddAutoMoqCustomization();
             var cmvs = autoFixture.Freeze<Mock<IComponentModelValidationService>>();
             
-            cmvs.Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
+            cmvs.Setup(x => x.ValidateList(It.IsAny<IList<Giver>>()))
                 .Returns((true, Enumerable.Empty<string>().ToList()));
 
             using var serviceProvider = new ServiceCollection()

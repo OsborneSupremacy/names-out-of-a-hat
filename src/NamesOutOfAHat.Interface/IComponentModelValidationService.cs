@@ -4,6 +4,8 @@ namespace NamesOutOfAHat.Interface
 {
     public interface IComponentModelValidationService
     {
-        public (bool isValid, IList<string> errors) Validate<T>(IList<T> items);
+        public (bool isValid, IList<string> errors) Validate<T>(T item);
+
+        public (bool isValid, IList<string> errors) ValidateList<T>(IList<T> items);
     }
 }

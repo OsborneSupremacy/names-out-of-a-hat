@@ -23,10 +23,8 @@ namespace NamesOutOfAHat.Api.Controllers
         {
             var response = new ResponseModel();
 
-            var givers = hat.Givers.ToList();
-
             (response.Success, response.Errors) = _validationService
-                .Validate(givers);
+                .Validate(hat);
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);

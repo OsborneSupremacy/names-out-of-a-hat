@@ -21,7 +21,7 @@ namespace NamesOutOfAHat.Service.Tests
             var service = new ComponentModelValidationService();
 
             // act
-            var (isValid, results) = service.Validate(items);
+            var (isValid, results) = service.ValidateList(items);
 
             // assert
             isValid.Should().BeFalse();
@@ -41,7 +41,7 @@ namespace NamesOutOfAHat.Service.Tests
             var service = new ComponentModelValidationService();
 
             // act
-            var (isValid, _) = service.Validate(items);
+            var (isValid, _) = service.ValidateList(items);
 
             // assert
             isValid.Should().BeTrue();
@@ -55,7 +55,7 @@ namespace NamesOutOfAHat.Service.Tests
             var service = new ComponentModelValidationService();
 
             // act
-            var (isValid, _) = service.Validate(items);
+            var (isValid, _) = service.ValidateList(items);
 
             // assert
             isValid.Should().BeTrue();
