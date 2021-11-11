@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NamesOutOfAHat.Interface;
+using NamesOutOfAHat.Models;
 using NamesOutOfAHat.Utility;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,9 @@ namespace NamesOutOfAHat.Service
         }
 
         protected static (bool, IList<T> duplicateValues) DuplicatesExist<T>(
-            IList<IPerson> people,
-            Func<IList<IPerson>, IEnumerable<T>> selector,
-            Func<IPerson, T, bool> equals
+            IList<Person> people,
+            Func<IList<Person>, IEnumerable<T>> selector,
+            Func<Person, T, bool> equals
         )
         {
             var duplicateValues = new List<T>();
@@ -54,13 +55,13 @@ namespace NamesOutOfAHat.Service
     [ServiceLifetime(ServiceLifetime.Scoped)]
     public class NameDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
-        protected static Func<IList<IPerson>, IEnumerable<string>> _nameSelector = (IList<IPerson> people) =>
-            people.Select(x => x.Name.Trim());
+        protected static Func<IList<Person>, IEnumerable<string>> _nameSelector = (IList<Person> people) =>
+            people.Select(x => x.Name.TrimNullSafe());
 
-        protected static Func<IPerson, string, bool> _nameEquals = (IPerson person, string value) =>
-            person.Name.Trim().Equals(value, StringComparison.OrdinalIgnoreCase);
+        protected static Func<Person, string, bool> _nameEquals = (Person person, string value) =>
+            person.Name.ContentEquals(value);
 
-        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
+        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<Person> people)
         {
             var (duplicatesExist, duplicateValues) = DuplicatesExist(people, _nameSelector, _nameEquals);
             if (!duplicatesExist) return (false, ErrorMessages);
@@ -78,13 +79,13 @@ namespace NamesOutOfAHat.Service
     [ServiceLifetime(ServiceLifetime.Scoped)]
     public class EmailDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
-        protected static Func<IList<IPerson>, IEnumerable<string>> _emailSelector = (IList<IPerson> people) =>
-            people.Select(x => x.Email.Trim());
+        protected static Func<IList<Person>, IEnumerable<string>> _emailSelector = (IList<Person> people) =>
+            people.Select(x => x.Email.TrimNullSafe());
 
-        protected static Func<IPerson, string, bool> _emailEquals = (IPerson person, string value) =>
-            person.Email.Trim().Equals(value, StringComparison.OrdinalIgnoreCase);
+        protected static Func<Person, string, bool> _emailEquals = (Person person, string value) =>
+            person.Email.ContentEquals(value);
 
-        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
+        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<Person> people)
         {
             var (duplicatesExist, duplicateValues) = DuplicatesExist(people, _emailSelector, _emailEquals);
             if (!duplicatesExist) return (false, ErrorMessages);
@@ -107,13 +108,13 @@ namespace NamesOutOfAHat.Service
     [ServiceLifetime(ServiceLifetime.Scoped)]
     public class IdDuplicateCheckService : DuplicateCheckService, IDuplicateCheckService
     {
-        protected static Func<IList<IPerson>, IEnumerable<Guid>> _idSelector = (IList<IPerson> people) =>
+        protected static Func<IList<Person>, IEnumerable<Guid>> _idSelector = (IList<Person> people) =>
             people.Select(x => x.Id);
 
-        protected static Func<IPerson, Guid, bool> _idEquals = (IPerson person, Guid value) =>
+        protected static Func<Person, Guid, bool> _idEquals = (Person person, Guid value) =>
             person.Id.Equals(value);
 
-        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
+        public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<Person> people)
         {
             var (duplicatesExist, duplicateValues) = DuplicatesExist(people, _idSelector, _idEquals);
             if (!duplicatesExist) return (false, ErrorMessages);

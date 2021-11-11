@@ -1,10 +1,9 @@
-﻿using NamesOutOfAHat.Interface;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NamesOutOfAHat.Models
 {
-    public record Person : IPerson
+    public record Person
     {
         [Required]
         public Guid Id { get; init; } = default!;

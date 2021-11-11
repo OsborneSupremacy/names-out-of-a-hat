@@ -27,5 +27,6 @@ namespace NamesOutOfAHat.Service
 
             return (true, Enumerable.Empty<string>().ToList());
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NamesOutOfAHat.Interface;
+using NamesOutOfAHat.Models;
 using NamesOutOfAHat.Utility;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace NamesOutOfAHat.Service
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
-        public (bool isValid, IList<string> errors) Validate(IList<IGiver> people)
+        public (bool isValid, IList<string> errors) Validate(IList<Giver> people)
         {
             var (isValid, errors) = _componentModelValidationService.Validate(people);
             if (!isValid) return (false, errors);

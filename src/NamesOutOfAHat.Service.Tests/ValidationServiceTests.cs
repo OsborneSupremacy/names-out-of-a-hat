@@ -19,13 +19,13 @@ namespace NamesOutOfAHat.Service.Tests
             // arrange
             var autoFixture = new Fixture().AddAutoMoqCustomization();
 
-            IList<IGiver> input = new List<IGiver>();
+            IList<Giver> input = new List<Giver>();
 
             var expectedErrors = new List<string>() { "error1", "error2" };
 
             //
             autoFixture.Freeze<Mock<IComponentModelValidationService>>()
-                .Setup(x => x.Validate(It.IsAny<IList<IGiver>>()))
+                .Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
                 .Returns((false, expectedErrors));
 
             var service = autoFixture.Create<ValidationService>();
@@ -47,14 +47,14 @@ namespace NamesOutOfAHat.Service.Tests
         {
             // arrange
             var autoFixture = new Fixture().AddAutoMoqCustomization();
-            IList<IGiver> input = new List<IGiver>();
+            IList<Giver> input = new List<Giver>();
 
             int x = 0;
             while(x++ < personCount)
                 input.Add(new Giver());
 
             autoFixture.Freeze<Mock<IComponentModelValidationService>>()
-                .Setup(x => x.Validate(It.IsAny<IList<IGiver>>()))
+                .Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
                 .Returns((true, Enumerable.Empty<string>().ToList()));
 
             var service = autoFixture.Create<ValidationService>();
@@ -76,7 +76,7 @@ namespace NamesOutOfAHat.Service.Tests
             var autoFixture = new Fixture().AddAutoMoqCustomization();
             var cmvs = autoFixture.Freeze<Mock<IComponentModelValidationService>>();
             
-            cmvs.Setup(x => x.Validate(It.IsAny<IList<IGiver>>()))
+            cmvs.Setup(x => x.Validate(It.IsAny<IList<Giver>>()))
                 .Returns((true, Enumerable.Empty<string>().ToList()));
 
             using var serviceProvider = new ServiceCollection()
@@ -85,7 +85,7 @@ namespace NamesOutOfAHat.Service.Tests
                 .AddScoped(provider => cmvs.Object)
                 .BuildServiceProvider();
             
-            IList<IGiver> input = new List<IGiver>();
+            IList<Giver> input = new List<Giver>();
 
             int x = 0;
             while (x++ < 3)
@@ -116,7 +116,7 @@ namespace NamesOutOfAHat.Service.Tests
                     ? new List<string>() { "Duplicates exist" } 
                     : Enumerable.Empty<string>().ToList();
 
-            public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<IPerson> people)
+            public (bool duplicatesExist, IList<string> errorMessages) Execute(IList<Person> people)
             {
                 return (!DuplicatesExist, ErrorMessages);
             }

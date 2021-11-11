@@ -5,4 +5,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NamesOutOfAHat.Models\NamesOutOfAHat.Models.csproj" />
+  </ItemGroup>
+
 </Project>

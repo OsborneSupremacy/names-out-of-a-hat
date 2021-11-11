@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NamesOutOfAHat.Api.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using NamesOutOfAHat.Service;
-using NamesOutOfAHat.Interface;
 using System.Linq;
-using NamesOutOfAHat.Dto;
+using NamesOutOfAHat.Models;
 
 namespace NamesOutOfAHat.Api.Controllers
 {
@@ -21,13 +19,14 @@ namespace NamesOutOfAHat.Api.Controllers
 
         [HttpPost]
         [Route("api/hat/validate")]
-        public async Task<IActionResult> ValidateAsync([FromBody] IList<GiverDto> people)
+        public async Task<IActionResult> ValidateAsync([FromBody] Hat hat)
         {
             var response = new ResponseModel();
 
+            var givers = hat.Givers.ToList();
+
             (response.Success, response.Errors) = _validationService
-                .Validate(people.Select(x => x as IGiver)
-                .ToList());
+                .Validate(givers);
 
             if (!response.Success)
                 return new BadRequestObjectResult(response);

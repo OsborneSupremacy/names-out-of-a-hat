@@ -1,5 +1,4 @@
 using FluentAssertions;
-using NamesOutOfAHat.Interface;
 using NamesOutOfAHat.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace NamesOutOfAHat.Service.Tests
         public void NameDuplicateCheckService_Should_Find_Duplicates()
         {
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Name = "Joe" },
                 new Person() { Name = "joe" },
@@ -37,7 +36,7 @@ namespace NamesOutOfAHat.Service.Tests
         public void NameDuplicateCheckService_Should_Not_Find_Duplicates()
         {
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Name = "Joe" },
                 new Person() { Name = "Joseph" },
@@ -60,7 +59,7 @@ namespace NamesOutOfAHat.Service.Tests
         public void EmailDuplicateCheckService_Should_Find_Duplicates()
         {
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Email = "Joe@gmail.com" },
                 new Person() { Email = "Joe@gmail.com" },
@@ -84,7 +83,7 @@ namespace NamesOutOfAHat.Service.Tests
         public void EmailDuplicateCheckService_Should_Not_Find_Duplicates()
         {
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Email = "Joe1@gmail.com" },
                 new Person() { Email = "Joe2@gmail.com" },
@@ -110,7 +109,7 @@ namespace NamesOutOfAHat.Service.Tests
             var guid2 = Guid.NewGuid();
 
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Id = guid1 },
                 new Person() { Id = guid1 },
@@ -134,7 +133,7 @@ namespace NamesOutOfAHat.Service.Tests
         public void IdDuplicateCheckService_Should_Not_Find_Duplicates()
         {
             // arrange
-            var input = new List<IPerson>()
+            var input = new List<Person>()
             {
                 new Person() { Id = Guid.NewGuid() },
                 new Person() { Id = Guid.NewGuid() },
