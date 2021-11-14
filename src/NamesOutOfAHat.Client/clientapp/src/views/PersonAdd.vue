@@ -3,10 +3,10 @@
         <h5 v-if="person.name.trim().length === 0" class="card-header bg-info">Add Person</h5>
         <h5 v-if="person.name.trim().length > 0" class="card-header bg-info">{{ person.name }}</h5>
         <div class="card-body">
-            <NameEdit :person="person" />
-            <EmailEdit :person="person" />
-            <button type="submit" class="btn btn-sm btn-primary" @click="commit" >Add</button>&nbsp;
-            <a href="#" class="btn btn-sm btn-danger" @click="cancel" >Cancel</a>
+          <NameEdit :person="person" />
+          <EmailEdit :person="person" />
+          <button type="submit" class="btn btn-sm btn-primary" @click="commit" >Add</button>&nbsp;
+          <a href="#" class="btn btn-sm btn-danger" @click="cancel" >Cancel</a>
         </div>
     </div>
 </template>
